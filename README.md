@@ -1,5 +1,3 @@
-Include at least one link.
-
 ##Hannah Krager
 I stumbled onto Python and coding while studying linguisitics and changed course to study programming.
 
