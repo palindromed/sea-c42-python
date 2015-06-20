@@ -1,6 +1,6 @@
-# Name: ...
-# CSE 140
-# Homework 2: DNA analysis
+# Name: Hannah Krager
+# Foundations II: Python
+# Homework 7: DNA analysis
 
 # This program reads DNA sequencer output and computes statistics, such as
 # the GC content.  Run it from the command line like this:
@@ -50,8 +50,6 @@ for line in inputfile:
 # Total nucleotides seen so far.
 total_count = 0
 # Number of G and C nucleotides seen so far.
-gc_count = 0
-at_count = 0
 g_count = 0
 c_count = 0
 a_count = 0
@@ -63,31 +61,29 @@ for bp in seq:
     # increment the total number of bps we've seen
     total_count = total_count + 1
     #count individual A, G, T and C and handle gc and at counts
-
     if bp == 'C':
-        gc_count += 1
         c_count += 1
     elif bp == 'G':
-        gc_count += 1
         g_count += 1
     elif bp == 'A':
-        at_count += 1
         a_count += 1
     elif bp == 'T':
         t_count += 1
-        at_count += 1
 
 
 # divide the gc_count by the total_count
-gc_content = float(gc_count) / total_count
-at_content = float(at_count) / total_count
+sums = a_count + t_count + g_count + c_count
+gc_content = float((c_count + g_count) / sums)
+at_content = float((a_count + t_count) / sums)
 
 # Print the answer
 print('GC-content:', gc_content)
 print('AT-content: ', at_content)
-print('G nucleotides present: ', g_count)
-print('C nucleotides present: ', c_count)
-print('A nucleotides present: ', a_count)
-print('T nucleotides present: ', t_count)
-print(len(seq))
-print(total_count)
+print('G count: ', g_count)
+print('C count: ', c_count)
+print('A count: ', a_count)
+print('T count: ', t_count)
+print('Sum count:', sums)
+print('Total count', total_count)
+print('seq length', len(seq))
+
