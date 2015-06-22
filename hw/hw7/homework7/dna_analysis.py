@@ -49,7 +49,7 @@ for line in inputfile:
 
 # Total nucleotides seen so far.
 total_count = 0
-# Number of G and C nucleotides seen so far.
+# Number of G, C, A and T nucleotides seen so far.
 g_count = 0
 c_count = 0
 a_count = 0
@@ -60,7 +60,7 @@ t_count = 0
 for bp in seq:
     # increment the total number of bps we've seen
     total_count = total_count + 1
-    #count individual A, G, T and C and handle gc and at counts
+    #count individual A, G, T and C
     if bp == 'C':
         c_count += 1
     elif bp == 'G':
@@ -71,19 +71,33 @@ for bp in seq:
         t_count += 1
 
 
-# divide the gc_count by the total_count
+#add the values of each a, t, c and g count
 sums = a_count + t_count + g_count + c_count
+# divide the sum of g and c counts by the sums of the individual counts
 gc_content = float((c_count + g_count) / sums)
+# divide the sum of a and c counts by the sums of the individual counts
 at_content = float((a_count + t_count) / sums)
+#calculate the at/gc ratio
+at_gc = float((a_count + t_count)/(g_count + c_count))
 
-# Print the answer
+
+#classify low/moderate/high for gc content based on given parameters
+if gc_content < .4:
+    classification = 'low GC content'
+elif gc_content > .6:
+    classification = 'high GC content'
+else:
+    classification = 'moderate GC content'
+
+# Print the answers
 print('GC-content:', gc_content)
-print('AT-content: ', at_content)
-print('G count: ', g_count)
-print('C count: ', c_count)
-print('A count: ', a_count)
-print('T count: ', t_count)
+print('AT-content:', at_content)
+print('G count:', g_count)
+print('C count:', c_count)
+print('A count:', a_count)
+print('T count:', t_count)
 print('Sum count:', sums)
-print('Total count', total_count)
-print('seq length', len(seq))
-
+print('Total count:', total_count)
+print('seq length:', len(seq))
+print('AT/GC Ratio:', at_gc)
+print('GC Classification:', classification)
