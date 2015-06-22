@@ -56,20 +56,22 @@ a_count = 0
 t_count = 0
 
 
-# for each base pair in the string,
-for bp in seq:
-    # increment the total number of bps we've seen
+# for each relevant nucleotide in the string,
+for n in seq:
+    # increment the total number of n(nucleotides) we've seen
     total_count = total_count + 1
     #count individual A, G, T and C
-    if bp == 'C':
+    if n == 'C':
         c_count += 1
-    elif bp == 'G':
+    elif n == 'G':
         g_count += 1
-    elif bp == 'A':
+    elif n == 'A':
         a_count += 1
-    elif bp == 'T':
+    elif n == 'T':
         t_count += 1
 
+
+#Calculations performed here:
 
 #add the values of each a, t, c and g count
 sums = a_count + t_count + g_count + c_count

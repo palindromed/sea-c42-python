@@ -21,6 +21,7 @@ GC-content: 0.4302926296296296
 
 Problem 3:
 When those variable assignment lines are commented out, a NameError occurs.
+That is because the variables are referenced without ever being assigned.
 ...
 
 Problem 4:
