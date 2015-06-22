@@ -10,12 +10,6 @@ def fibonacci(n):
         elif (n == 1):
             return 1
 
-def fibonacci1(n):
-    num1, num2 = 0, 1
-    for num in range(n):
-        num1, num2 = num2, num1 + num2
-    return num1
-
 
 def lucas(n):
     '''return the nth Lucas value'''
@@ -29,12 +23,6 @@ def lucas(n):
         elif (n == 1):
             return 1
 
-def lucas1(n):
-    num1, num2 = 2, 1
-    for num in range(n):
-        num1, num2 = num2, num1 + num2
-    return num1
-
 
 def sum_series(n, n0=0, n1=1):
     if (n > 1):
@@ -47,4 +35,32 @@ def sum_series(n, n0=0, n1=1):
         elif (n == 1):
             return n1
 
+if __name__ == '__main__':
 
+    #Test accuracy of fibonacci
+    assert fibonacci(0) == 0
+    assert fibonacci(1) == 1
+    assert fibonacci(2) == 1
+    assert fibonacci(3) == 2
+    assert fibonacci(4) == 3
+    assert fibonacci(5) == 5
+    assert fibonacci(6) == 8
+    assert fibonacci(7) == 13
+
+    #Test accuracy of lucas
+    assert lucas(0) == 2
+    assert lucas(1) == 1
+    assert lucas(2) == 3
+    assert lucas(3) == 4
+    assert lucas(4) == 7
+    assert lucas(5) == 11
+    assert lucas(6) == 18
+    assert lucas(7) == 29
+
+    #Test that fibonacci matches sum_series
+    for num in range(0, 11):
+        assert fibonacci(num) == sum_series(num)
+
+    #Test that lucas matches sum_series
+    for num in range(0, 11):
+        assert lucas(num) == sum_series(num, 2, 1)
