@@ -1,5 +1,9 @@
 def fibonacci(n):
-    '''return the nth value of the fibonacci sequence'''
+    '''
+    return the nth value of the fibonacci sequence, if argument is
+    less than 0, return a falsie value. if argument is 0 or 1, return
+    that same number.
+    '''
     if (n > 1):
         return fibonacci(n - 1) + fibonacci(n - 2)
     else:
@@ -12,7 +16,9 @@ def fibonacci(n):
 
 
 def lucas(n):
-    '''return the nth Lucas value'''
+    '''
+    return the nth Lucas value
+    '''
     if (n > 1):
         return lucas(n - 1) + lucas(n - 2)
     else:
@@ -25,6 +31,10 @@ def lucas(n):
 
 
 def sum_series(n, n0=0, n1=1):
+    '''
+    with no arguments specified for n0 or n1, the result is the same
+    as fibonacci. If n0 ==2 and n1 ==1, result will match lucas results.
+    '''
     if (n > 1):
         return sum_series(n - 1, n0, n1) + sum_series(n - 2, n0, n1)
     else:
