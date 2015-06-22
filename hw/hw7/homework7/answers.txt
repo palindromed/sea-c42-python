@@ -39,10 +39,9 @@ T nucleotides present: 7661547
 Problem 6:
 The sum of the individual counts of A, T, C and G is different from both
 the seq variable length and the total_count. These variables pick up the
-non A, T, C and G characters in the file, so neither the length of seq or
-total_count can be used as the denominator when calculating AT or GC content.
-The sum of the individual
-
+non A, T, C and G characters that we are not interested in for these
+calculations, so neither the length of seq or total_count can accurately be used as the denominator when calculating AT or GC content.
+The sum of the individual counts of A,T,C and G is the denominator that gives an accurate answer.
 ...
 
 Problem 7:
@@ -58,5 +57,6 @@ I did not collaborate with anyone for this assignment
 ...
 
 Reflection:
+With an assignment like this, attention to detail is most important. I spent too much time stuck on things that had to do with understanding what I was looking for rather than writing and testing code. I have done similar projects in the past, so there wasn't much new to me but it was great review and practice.
 
 ...
