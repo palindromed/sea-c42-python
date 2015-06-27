@@ -4,55 +4,73 @@ donors = {
     'Ronald Mcdonald': [200, 448, 500]
     }
 
+
 def start():
     menu = ''' Choose from the following:\n
         T - Send a (T)hank You\n
         R - Create a (R)eport\n
-        quit - Quit the program'''
+        quit - Quit the program\n'''
 
     print('Welcome to Mailroom Madness')
 
-    print(menu)
+    answer = input(menu)
+    answer = answer.lower()
 
-    answer = input()
-    answer.lower()
     while answer not in 'trquit':
         print('That is not a valid input. Please try again.\n' + menu)
 
+    while answer == 'quit':
+        break
     if answer == 't':
         thanks()
     elif answer == 'r':
         report()
-    elif answer == 'quit':
-        quit()
 
 
 def thanks():
     menu = '''Please enter a full name or choose from the following:\n
     list - Print a list of previous donors\n'
     quit - Quit the program\n'''
+
     print(menu)
     choice = input()
-    if choice.lower() == 'list':
-        print(donors.keys())
-        choice = input()
+    choice = choice.lower()
+
+    while choice == 'quit':
+        break
+
+    while choice == 'list':
+        print(list_donors())
+        choice = input(menu)
     try:
-        print(donors[choice])
+        donors[choice]
+    except KeyError:
+        new_donor(choice)
 
+
+def new_donor(choice):
+    donors[choice] = []
+    donation = input("Enter donation amount for " + choice + ': ')
+    while not isinstance(donation, float) or donation < 0:
+        donation = validate()
+
+    donors[choice].append(donation)
+
+def validate():
+    try:
+        return float(input("Try again. Please enter a number: "))
     except ValueError:
-        choice = input('That name is not an existing donor.')
+        print("That is not a number. Please enter a number. ")
+        return None
 
 
 
-def quit():
-    print('you quitter')
+def list_donors():
+    return donors.keys()
 
 
 def report():
     print('report')
 
-
-
 start()
-
 #if __name__ == '__main__':
