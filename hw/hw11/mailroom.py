@@ -1,3 +1,5 @@
+#if __name__ == '__main__':
+
 donors = {
     'Bill Gates': [3000000, 13438902, 2532],
     'Elon Musk': [3, 6, 99],
@@ -9,22 +11,36 @@ def start():
     menu = ''' Choose from the following:\n
         T - Send a (T)hank You\n
         R - Create a (R)eport\n
-        quit - Quit the program\n'''
+        Quit - Quit the program\n'''
 
     print('Welcome to Mailroom Madness')
 
     answer = input(menu)
-    answer = answer.lower()
+    valid_input(answer)
 
-    while answer not in 'trquit':
-        print('That is not a valid input. Please try again.\n' + menu)
+    while answer:
+        answer = input('Please enter a valid selection:\n' + menu)
+        answer = valid_input(answer)
 
-    while answer == 'quit':
-        break
-    if answer == 't':
-        thanks()
-    elif answer == 'r':
-        report()
+
+
+def valid_input(answer):
+    bad_input = True
+
+    try:
+        answer = answer.lower()
+        while answer == 'quit':
+            break
+        if answer == 't':
+            bad_input = False
+            thanks()
+        elif answer == 'r':
+            bad_input = False
+            report()
+        else:
+            return bad_input
+    except TypeError:
+            return bad_input
 
 
 def thanks():
@@ -34,12 +50,12 @@ def thanks():
 
     print(menu)
     choice = input()
-    choice = choice.lower()
+    choice = choice.title()
 
-    while choice == 'quit':
+    while choice == 'Quit':
         break
 
-    while choice == 'list':
+    while choice == 'List':
         print(list_donors())
         choice = input(menu)
     try:
@@ -50,27 +66,65 @@ def thanks():
 
 def new_donor(choice):
     donors[choice] = []
-    donation = input("Enter donation amount for " + choice + ': ')
+    donation = validate(choice)
     while not isinstance(donation, float) or donation < 0:
-        donation = validate()
+        donation = validate(choice)
 
     donors[choice].append(donation)
+    send_thanks(choice, donation)
 
-def validate():
+
+def validate(choice):
+    donation = input("Enter donation amount for " + choice + ': ')
     try:
-        return float(input("Try again. Please enter a number: "))
+        return float(donation)
     except ValueError:
         print("That is not a number. Please enter a number. ")
         return None
 
 
-
 def list_donors():
-    return donors.keys()
+    strings = ''
+
+    for d in donors.keys():
+        strings += d + ', '
+    return strings
+
+
+def send_thanks(choice, donation):
+    str(donation)
+    input('''Dear {},
+
+        Thank you so much for your kind donation of ${:.2f}.
+
+        We here at the Foundation for Homeless Whales greatly appreciate it.
+
+        Your money will go towards creating new oceans on the moon for whales to live in.
+
+        Thanks again,
+
+        Jim Grant
+
+        Director, F.H.W.\n
+
+        Press Enter to Continue...\n
+        '''.format(choice, donation))
+    start()
 
 
 def report():
-    print('report')
+    print('{:^20} | {:^12}|{:^5}| {:^15}'.format("Donor Name", "Total",
+            "#", "Average Amount"))
+    print('{:_^50}'.format(''))
+    for n in donors:
+        total = 0
+        num = len(donors[n])
+        person = n
+        for value in donors[n]:
+            total += value
+        avg = total/num
+        print('{:^20} | {:^11}|{:^5} | ${:.2f}| '.format(person, total, num, avg))
+    input("Press enter to continue")
+    start()
 
 start()
-#if __name__ == '__main__':
