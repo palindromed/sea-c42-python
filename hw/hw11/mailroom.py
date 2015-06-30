@@ -88,7 +88,8 @@ if __name__ == '__main__':
 
         We here at the Foundation for Homeless Whales greatly appreciate it.
 
-        Your money will go towards creating new oceans on the moon for whales to live in.
+        Your money will go towards creating new oceans on the moon for whales
+        to live in.
 
         Thanks again,
 
