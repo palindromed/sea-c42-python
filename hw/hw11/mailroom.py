@@ -1,99 +1,95 @@
-#if __name__ == '__main__':
+if __name__ == '__main__':
 
-donors = {
-    'Bill Gates': [3000000, 13438902, 2532],
-    'Elon Musk': [3, 6, 99],
-    'Ronald Mcdonald': [200, 448, 500]
-    }
+    donors = {
+        'Bill Gates': [3000000, 13438902, 2532],
+        'Elon Musk': [3, 6, 99],
+        'Ronald Mcdonald': [200, 448, 500]
+        }
 
+    def start():
+        menu = ''' Choose from the following:\n
+            T - Send a (T)hank You\n
+            R - Create a (R)eport\n
+            Quit - Quit the program\n'''
 
-def start():
-    menu = ''' Choose from the following:\n
-        T - Send a (T)hank You\n
-        R - Create a (R)eport\n
-        Quit - Quit the program\n'''
+        print('Welcome to Mailroom Madness')
 
-    print('Welcome to Mailroom Madness')
+        answer = input(menu)
+        valid_input(answer)
 
-    answer = input(menu)
-    valid_input(answer)
+        while answer:
+            answer = input('Please enter a valid selection:\n' + menu)
+            answer = valid_input(answer)
 
-    while answer:
-        answer = input('Please enter a valid selection:\n' + menu)
-        answer = valid_input(answer)
+    def valid_input(answer):
+        bad_input = True
 
+        try:
+            answer = answer.lower()
+            if answer == 'quit':
+                exit()
+            elif answer == 't':
+                thanks()
+            elif answer == 'r':
+                report()
+            else:
+                return bad_input
+        except TypeError:
+                return bad_input
 
+    def thanks():
+        menu = '''Please enter a full name or choose from the following:\n
+        list - Print a list of previous donors\n'
+        quit - Quit the program, return to the main menu\n'''
 
-def valid_input(answer):
-    bad_input = True
+        print(menu)
 
-    try:
-        answer = answer.lower()
-        while answer == 'quit':
-            break
-        if answer == 't':
-            bad_input = False
+        choice = input()
+        choice = choice.title()
+        valid_thanks(choice)
+
+    def valid_thanks(choice):
+        try:
+            if donors[choice]:
+                new_donor(choice)
+        except KeyError:
+            new_donor(choice)
+
+        if choice == 'Quit':
+            start()
+
+        elif choice == 'List':
+            print(list_donors())
             thanks()
-        elif answer == 'r':
-            bad_input = False
-            report()
-        else:
-            return bad_input
-    except TypeError:
-            return bad_input
 
-
-def thanks():
-    menu = '''Please enter a full name or choose from the following:\n
-    list - Print a list of previous donors\n'
-    quit - Quit the program\n'''
-
-    print(menu)
-    choice = input()
-    choice = choice.title()
-
-    while choice == 'Quit':
-        break
-
-    while choice == 'List':
-        print(list_donors())
-        choice = input(menu)
-    try:
-        donors[choice]
-    except KeyError:
-        new_donor(choice)
-
-
-def new_donor(choice):
-    donors[choice] = []
-    donation = validate(choice)
-    while not isinstance(donation, float) or donation < 0:
+    def new_donor(choice):
+        if choice not in donors:
+            donors[choice] = []
         donation = validate(choice)
+        while not isinstance(donation, float) or donation < 0:
+            donation = validate(choice)
 
-    donors[choice].append(donation)
-    send_thanks(choice, donation)
+        donors[choice].append(donation)
+        send_thanks(choice, donation)
 
+    def validate(choice):
+        donation = input("Enter donation amount for " + choice + ': ')
+        try:
+            return float(donation)
+        except ValueError:
+            print("That is not a number. Please enter a number. ")
+            return None
 
-def validate(choice):
-    donation = input("Enter donation amount for " + choice + ': ')
-    try:
-        return float(donation)
-    except ValueError:
-        print("That is not a number. Please enter a number. ")
-        return None
+    def list_donors():
+        strings = ''
 
+        for d in donors.keys():
+            strings += d + ', '
+        return strings
 
-def list_donors():
-    strings = ''
-
-    for d in donors.keys():
-        strings += d + ', '
-    return strings
-
-
-def send_thanks(choice, donation):
-    str(donation)
-    input('''Dear {},
+    def send_thanks(choice, donation):
+        str(donation)
+        input('''Dear {},
 
         Thank you so much for your kind donation of ${:.2f}.
 
@@ -109,22 +105,22 @@ def send_thanks(choice, donation):
 
         Press Enter to Continue...\n
         '''.format(choice, donation))
-    start()
+        start()
 
-
-def report():
-    print('{:^20} | {:^12}|{:^5}| {:^15}'.format("Donor Name", "Total",
+    def report():
+        print('{:^20} | {:^12}|{:^5}| {:^15}'.format("Donor Name", "Total",
             "#", "Average Amount"))
-    print('{:_^50}'.format(''))
-    for n in donors:
-        total = 0
-        num = len(donors[n])
-        person = n
-        for value in donors[n]:
-            total += value
-        avg = total/num
-        print('{:^20} | {:^11}|{:^5} | ${:.2f}| '.format(person, total, num, avg))
-    input("Press enter to continue")
-    start()
+        print('{:_^50}'.format(''))
+        for n in donors:
+            total = 0
+            num = len(donors[n])
+            person = n
+            for value in donors[n]:
+                total += value
+            avg = total/num
+            print('{:^20} | ${:^11.2f}|{:^5} | ${:^15.2f}| '.format(person, total,
+                        num, avg))
+        input("Press enter to continue")
+        start()
 
-start()
+    start()
