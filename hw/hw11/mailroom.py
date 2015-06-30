@@ -1,7 +1,7 @@
 if __name__ == '__main__':
 
     donors = {
-        'Bill Gates': [3000000, 13438902, 2532],
+        'Yoo Hoo': [3000000, 13438902, 2532],
         'Elon Musk': [3, 6, 99],
         'Ronald Mcdonald': [200, 448, 500]
         }
@@ -49,18 +49,18 @@ if __name__ == '__main__':
         valid_thanks(choice)
 
     def valid_thanks(choice):
-        try:
-            if donors[choice]:
-                new_donor(choice)
-        except KeyError:
-            new_donor(choice)
 
         if choice == 'Quit':
             start()
 
         elif choice == 'List':
-            print(list_donors())
+            print(', '.join(donors.keys()))
             thanks()
+        try:
+            if donors[choice]:
+                new_donor(choice)
+        except KeyError:
+            new_donor(choice)
 
     def new_donor(choice):
         if choice not in donors:
@@ -79,13 +79,6 @@ if __name__ == '__main__':
         except ValueError:
             print("That is not a number. Please enter a number. ")
             return None
-
-    def list_donors():
-        strings = ''
-
-        for d in donors.keys():
-            strings += d + ', '
-        return strings
 
     def send_thanks(choice, donation):
         str(donation)
