@@ -38,7 +38,7 @@ if __name__ == '__main__':
                 return bad_input
 
     def thanks():
-        menu = '''Please enter a full name or choose from the following:\n
+        menu = '''Please enter a name or choose from the following:\n
         list - Print a list of previous donors\n'
         quit - Quit the program, return to the main menu\n'''
 
