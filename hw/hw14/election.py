@@ -60,9 +60,14 @@ def most_recent_poll_row(poll_rows, pollster, state):
     Given a list of *PollDataRow*s, returns the most recent row with the
     specified *Pollster* and *State*. If no such row exists, returns None.
     """
-    #TODO: Implement this function
-    pass
-
+    most_recent = None
+    date2 = 'Mar 22 1983'
+    for row in poll_rows:
+        date = row['Date']
+        if row['State'] == state and row['Pollster'] == pollster and earlier_date(date,date2) == False:
+            most_recent = row
+            date2 = row['Date']
+    return most_recent
 
 ################################################################################
 # Problem 3: Pollster predictions
