@@ -22,7 +22,8 @@ class Element(object):
         self.content += new_text
 
     def render(self, file, indent=''):
-        file.write('<' + self.tag + '>' + self.content + '</' + self.tag + '>')
+        file.write(self.indent + '<' + self.tag + '>' + self.content + '</' +
+                   self.tag + '>')
 
 
 class Html(Element):
