@@ -45,10 +45,17 @@ class Html(Element):
         Element.render(self, outfile)
 
 
+class Head(Element):
+    '''Create a head tag'''
+    def __init__(self, content=''):
+        Element.__init__(self, name='head')
+        #self.indent = '    '
+
+
 class Body(Element):
     ''' Create a body tag '''
     def __init__(self, content=''):
-        Element.__init__(self, name='body', content=content)
+        Element.__init__(self, name='body')
 
 
 class P(Element):
@@ -59,3 +66,23 @@ class P(Element):
         self.indent = '        '
 
 
+class OneLineTag(Element):
+    """Render tags that stay on one line"""
+    def render(self, outfile, content):
+        outfile.write(self.indent + '<' + self.name + '>')
+
+        for child in self.children:
+            try:
+                child.render(outfile, self.indent)
+            except AttributeError:
+                outfile.write(child)
+
+        outfile.write("</" + self.name + ">\n")
+
+
+class Title(OneLineTag):
+    '''Create the one line element 'title' '''
+
+    def __init__(self, content=''):
+        Element.__init__(self, name='title', content=content)
+        #self.name = 'title'
