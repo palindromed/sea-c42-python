@@ -44,9 +44,10 @@ class Element(object):
 class Html(Element):
     '''Create an HTML tag'''
     name = 'html'
-    def __init__(self, content=''):
-        Element.__init__(self,  name='html')
-        self.indent = ''
+    indent = ''
+    #def __init__(self, content=''):
+       # Element.__init__(self,  name='html')
+        #self.indent = ''
 
 
     def render(self, outfile, indent=''):
@@ -102,3 +103,18 @@ class Title(OneLineTag):
     def __init__(self, content=''):
         Element.__init__(self, name='title', content=content)
 
+
+class SelfClosingTag(Element):
+    """render a self closing tag"""
+    def render(self, outfile, indent=""):
+        outfile.write(self.indent + "<" + self.name + self.attr + "/>\n")
+
+
+class Hr(SelfClosingTag):
+    """hr tag"""
+    name = "hr"
+
+
+class Br(SelfClosingTag):
+    """br tag"""
+    name = "br"
