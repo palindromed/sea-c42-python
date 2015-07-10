@@ -23,9 +23,6 @@ class Element(object):
 
         self.children = [content] if content else []
 
-
-
-
     def append(self, new_child):
         self.children.append(new_child)
 
@@ -42,13 +39,9 @@ class Element(object):
 
 
 class Html(Element):
-    '''Create an HTML tag'''
+    """Create an HTML tag"""
     name = 'html'
     indent = ''
-    #def __init__(self, content=''):
-       # Element.__init__(self,  name='html')
-        #self.indent = ''
-
 
     def render(self, outfile, indent=''):
         outfile.write("<!DOCTYPE html>\n")
@@ -56,36 +49,25 @@ class Html(Element):
 
 
 class Head(Element):
-    '''Create a head tag'''
+    """Create a head tag"""
     name = 'head'
-  #  def __init__(self, content=''):
-       # Element.__init__(self)
-        #self.indent = '    '
-
 
 
 class Body(Element):
-    ''' Create a body tag '''
+    """ Create a body tag """
     name = 'body'
-   # def __init__(self, content=''):
-      # $ Element.__init__(self)
-
 
 
 class P(Element):
-    ''' Create a p tag '''
+    """Create a p tag """
     name = 'p'
     indent = '        '
-
-    #def __init__(self, content=''):
-       # Element.__init__(self, content=content)
-       # self.indent = '        '
 
 
 class OneLineTag(Element):
     """Render tags that stay on one line"""
     def render(self, outfile, content):
-        outfile.write(self.indent + '<' + self.name + '>')
+        outfile.write(self.indent + '<' + self.name + self.attr + '>')
 
         for child in self.children:
             try:
@@ -97,11 +79,22 @@ class OneLineTag(Element):
 
 
 class Title(OneLineTag):
-    '''Create the one line element 'title' '''
+    """Create the one line element 'title' """
     name = 'title'
 
     def __init__(self, content=''):
         Element.__init__(self, name='title', content=content)
+
+
+class A(OneLineTag):
+    """(a)nchor tag"""
+    name = "a"
+
+    def __init__(self, link, content):
+        """override init create working 'a' tag"""
+        self.link = link
+        self.content = content
+        Element.__init__(self, href=link, content=content)
 
 
 class SelfClosingTag(Element):
