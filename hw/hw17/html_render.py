@@ -10,35 +10,52 @@ Python class example.
 
 
 class Element(object):
-    """ Renders HTML """
-    tag = 'html'
-    indent = ''
+    """ Renders HTML elements """
+
+    IND_LEVEL = '    '
 
     def __init__(self, name='', content=''):
         self.name = name
-        self.content = content
+        self.children = [content] if content else []
+        self.indent = '    '
 
-    def append(self, new_text):
-        self.content += new_text
+    def append(self, new_child):
+        self.children.append(new_child)
 
-    def render(self, file, indent=''):
-        file.write(self.indent + '<' + self.tag + '>' + self.content + '</' +
-                   self.tag + '>')
+    def render(self, outfile, indent=''):
+        outfile.write("{}<{}>\n".format(self.indent, self.name))
+
+        for child in self.children:
+            try:
+                child.render(outfile, self.indent + Element.IND_LEVEL)
+            except AttributeError:
+                outfile.write(self.indent + Element.IND_LEVEL + child + "\n")
+
+        outfile.write(self.indent + "</" + self.name + ">\n")
 
 
 class Html(Element):
     '''Create an HTML tag'''
-    tag = 'html'
-    indent = ''
+    def __init__(self, content=''):
+        Element.__init__(self,  name='html')
+        self.indent = ''
+
+    def render(self, outfile, indent=''):
+        outfile.write("<!DOCTYPE html>\n")
+        Element.render(self, outfile)
 
 
 class Body(Element):
     ''' Create a body tag '''
-    tag = 'body'
-    indent = '  '
+    def __init__(self, content=''):
+        Element.__init__(self, name='body', content=content)
 
 
 class P(Element):
     ''' Create a p tag '''
-    tag = 'p'
-    indent = '      '
+
+    def __init__(self, content=''):
+        Element.__init__(self, name='p', content=content)
+        self.indent = '        '
+
+
