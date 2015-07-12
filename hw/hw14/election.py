@@ -90,8 +90,25 @@ def pollster_predictions(poll_rows):
     Given a list of *PollDataRow*s, returns *PollsterPredictions*.
     For a given pollster, uses only the most recent poll for a state.
     """
-    #TODO: Implement this function
-    pass
+    num = 0
+    edge_index = {}
+    for row in poll_rows:
+        num += 1
+        row.update({"Key": num})
+        edge_index.update({num: state_edges([row])})
+    predict = {}
+    poll_unq = unique_column_values(poll_rows, "Pollster")
+    state_unq = unique_column_values(poll_rows, "State")
+    for pollster in poll_unq:
+        predict.update({pollster: {}})
+        for state in state_unq:
+            recent = most_recent_poll_row(poll_rows, pollster, state)
+            if (recent):
+                index = recent["Key"]
+                edge = edge_index[index]
+                predict[pollster].update(edge)
+
+    return predict
 
 
 ################################################################################
